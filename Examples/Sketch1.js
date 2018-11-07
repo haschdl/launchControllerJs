@@ -11,9 +11,22 @@ function setup() {
    //controller = new LaunchController();
    controller = window.controller;
    controller.init();
+
+
+   createP("Operation of pads: ");
+   radio = createRadio();
+   radio.option('Toggle',1);
+   radio.option('Radio',2);
+   radio._getInputChildrenArray()[0].checked = true;
 }
 
 function draw() {
+
+   //adjusting PadSet mode
+   var padOption = radio.value();
+   controller.padSet.padMode = padOption;
+   
+
    background(80);
    translate(s/2,0);
    ellipseMode(CORNER);
@@ -31,15 +44,15 @@ function draw() {
       ellipse(x, y , s, s);
       
       fill(120);
-      var normal =controller.knobPositions[i] / 127;
+      var normal =controller.knobSet[i].knobValue / 127;
       arc(x, y, s, s, start, start + normal*(end-start),PIE);
       fill(255);
-      text(controller.knobPositions[i],x,y);
+      text(controller.knobSet[i].knobValue,x,y);
    }  
    // drawing 8as * (1 +s   
    translate(0,4*s);
    for (var i = 0; i < 8; i++) {
-      if (controller.padStatus[i] == true) {
+      if (controller.padSet[i].status == true) {
          strokeWeight(2);
          stroke(0);
          fill(255, 0, 0);

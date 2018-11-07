@@ -1,12 +1,25 @@
 <html>
-   <head>
-      <script type="module" src="../LaunchController/LaunchController.js"></script>
-      <script type="module" src="LaunchControllerSetup.js"></script>
-      <script src="Sketch.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
-   </head>
-   <body>
-      <h1>Testing LaunchController MIDI</h1>
-      <div id="sketch"></div>
-   </body>
+<head>
+   <script type="module" src="../LaunchController/LaunchController.js"></script>
+   <script type="module" src="LaunchControllerSetup.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
+   <script>
+      let url = new URL(window.location.href);
+      [
+         url.search.substr(1)
+      ].forEach(function (src) {
+         var script = document.createElement('script');
+         script.src = src;
+         document.head.appendChild(script);
+      });
+   </script>
+</head>
+
+<body>
+   <h1>Launch Control examples with MIDI API</h1>
+   <a href="?Sketch1.js">Example 1</a> <a href="?Sketch2.js">Example 2</a>
+   <div id="sketch"></div>
+</body>
+
 </html>

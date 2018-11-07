@@ -7,15 +7,19 @@ import {
    LedConstants
 } from './LedConstants.js';
 
-
-
-import * as PADS from './Pads.js';
+import {
+   PadSet,
+   PAD_MODE
+} from './PadSet.js';
+import {
+   KnobSet
+} from './KnobSet.js';
 
 export class LaunchController {
    constructor() {
       this.LaunchControlOut = null;
-      this.padStatus = Array.apply(null, new Array(8)).map(function(){return false});
-      this.knobPositions = new Uint8Array(16);
+      this.knobSet = new KnobSet(16);
+      this.padSet = new PadSet(8, PAD_MODE.RADIO);
    }
 
    sendLedOnOff(onOff, pad) {
@@ -26,59 +30,54 @@ export class LaunchController {
       //and Value is the velocity byte that defines the brightness values of both the red and green LEDs.
       let template = 0x08;
       let color = onOff ? LedConstants.RED_FULL : LedConstants.OFF;
-      let ledOnMsg = Uint8Array.from([0xF0, 0x00, 0x20, 0x29, 0x02, 0x0A, 0x78, template, pad.code, color, 0xF7]);
+      let ledOnMsg = Uint8Array.from([0xF0, 0x00, 0x20, 0x29, 0x02, 0x0A, 0x78, template, pad, color, 0xF7]);
       this.LaunchControlOut.send(ledOnMsg);
    }
 
    getMIDIMessage(midiMessage) {
       let data = midiMessage.data; // Uint8Array(3)
-      let padToChange = null;
+      let padToChange = 0;
       if (data[0] == 184) { //KNOB
-         console.log("You changed a knob! " + data);
+
          let knobNote = data[1];
-         let knobIndex = ( knobNote < 40) ? knobNote -21 : knobNote -33;
+         let knobIndex = (knobNote < 40) ? knobNote - 21 : knobNote - 33;
+         console.log("Knob " + knobIndex + " changed: " + data);
+
          //TODO RANGE; DEFAULT etc...
-         this.knobPositions[knobIndex] = data[2];
+         this.knobSet[knobIndex].knobValue = data[2];
 
       } else if (data[0] == 152 && data[2] == 127) { //PAD, note ON (= when PAD is pressed)
          switch (data[1]) {
             case 9:
-               padToChange = PADS.PAD_1();
-               break;
             case 10:
-               padToChange = PADS.PAD_2();
-               break;
             case 11:
-               padToChange = PADS.PAD_3();
-
-               break;
             case 12:
-               padToChange = PADS.PAD_4();
+               padToChange = data[1] - 9;
                break;
             case 25:
-               padToChange = PADS.PAD_5();
-               break;
             case 26:
-
-               padToChange = PADS.PAD_6();
-
-               break;
             case 27:
-
-               padToChange = PADS.PAD_7();
-
-               break;
             case 28:
-
-               padToChange = PADS.PAD_8();
-
+               padToChange = data[1] - 21;
                break;
          } //end Switch
-         console.log("You pressed pad " + padToChange.name);
+         console.log("You pressed pad " + padToChange);
 
-         this.padStatus[padToChange.code] = ! this.padStatus[padToChange.code];
-        
-         this.sendLedOnOff(this.padStatus[padToChange.code],padToChange);
+         this.padSet[padToChange].status = !this.padSet[padToChange].status;
+
+         if (this.padSet.padMode == PAD_MODE.RADIO) {
+            
+            for (let i = 0; i < this.padSet.length; i++) {
+               if (padToChange == i)
+                  this.sendLedOnOff(this.padSet[padToChange].status, padToChange);
+               else {
+                  //switch off all other pads
+                  this.sendLedOnOff(false, i);
+                  this.padSet[i].status = false;
+               }
+            }
+         } else if (this.padSet.padMode == PAD_MODE.TOGGLE)
+            this.sendLedOnOff(this.padSet[padToChange].status, padToChange);
 
       }
    }
