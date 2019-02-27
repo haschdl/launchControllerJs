@@ -1,0 +1,43 @@
+{
+  "name": "launchcontrollerjs",
+  "version": "1.0.0",
+  "description": "Novation LaunchControll wrapper for Javascript. ",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "presets": [
+    "@babel/preset-env"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haschdl/launchControllerJs.git"
+  },
+  "keywords": [
+    "midi",
+    "novation",
+    "launchcontrol"
+  ],
+  "author": "Half Scheidl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haschdl/launchControllerJs/issues"
+  },
+  "homepage": "https://github.com/haschdl/launchControllerJs#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.1.6",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/register": "^7.0.0",
+    "mocha": "^5.2.0",
+    "mock-local-storage": "^1.1.7",
+    "nyc": "^13.1.0",
+    "rollup": "^0.67.1",
+    "rollup-plugin-terser": "^3.0.0"
+  }
+}

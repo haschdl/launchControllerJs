@@ -2,6 +2,7 @@
  * p5.js specific content
  */
 
+
 var controller;
 
 let palette = ['#CF8882', '#3F2F30','#625E49','#EFD687','#F29C95', '#335145','#28112B','#8DAA91'];
