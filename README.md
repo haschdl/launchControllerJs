@@ -1,10 +1,13 @@
 # launchControllerJs
-Novation LaunchController wrapper for Javascript. Primarily targeted at p5.js
+
+A Javascript client for the Novation MIDI controllers
+[LaunchPad Mini](!https://novationmusic.com/launch/launchpad-mini) and LaunchControl.
+
 
 * [Examples](#examples)
 * [Limitations](#limitations)
 
-Please submit an issue in case of bugs or feature suggestions.
+Please [submit an issue](https://github.com/haschdl/launchControllerJs/issues/new) in case of bugs or feature suggestions.
 
 # Examples
 
