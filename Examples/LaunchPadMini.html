@@ -1,0 +1,25 @@
+<html>
+<head>
+   <script src="../dist/launchpadmini.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
+   <script >
+      window.controller = new LaunchPadMiniJS.LaunchPadMini();
+      let url = new URL(window.location.href);
+      [
+         url.search.substr(1)
+      ].forEach(function (src) {
+         var script = document.createElement('script');
+         script.src = src;
+         document.head.appendChild(script);
+      });
+   </script>
+</head>
+
+<body>
+   <h1>Launch Pad MINI examples with MIDI API</h1>
+   <a href="?Sketch3.js">Example 3</a>    
+   <div id="sketch"></div>
+</body>
+
+</html>
