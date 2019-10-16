@@ -22,7 +22,7 @@ export class LaunchPadMini {
   }
 
   sendLedOnOff (onOff, pad) {
-    let color = onOff ? LedConstants.RED_FULL : LedConstants.OFF
+    let color = onOff ? LedConstants.YELLOW_FULL : LedConstants.OFF
     let ledOnMsg = Uint8Array.from([0x90, pad, color])
     this.LaunchControlOut.send(ledOnMsg)
   }
