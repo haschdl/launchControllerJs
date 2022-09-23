@@ -44,6 +44,6 @@
     "mock-local-storage": "^1.1.7",
     "nyc": "^14.1.1",
     "rollup": "^1.24.0",
-    "rollup-plugin-terser": "^5.1.2"
+    "rollup-plugin-terser": "^5.3.1"
   }
 }
